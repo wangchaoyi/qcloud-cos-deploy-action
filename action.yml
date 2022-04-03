@@ -24,10 +24,10 @@ runs:
   using: "composite"
   steps:
     - run: |
-        wget https://github.com/tencentyun/coscli/releases/download/v0.10.2-beta/coscli-linux
-        mv coscli-linux coscli
+        wget https://github.com/tencentyun/coscli/releases/download/v0.11.0-beta/coscli-linux -O coscli
         chmod 755 coscli
-        ./coscli --version
+        sudo mv ./coscli /usr/local/bin/
+        coscli --version
       shell: bash
     - run: |  
         echo "
@@ -37,7 +37,7 @@ runs:
           secretkey: ${{ inputs.secret_key }}
           sessiontoken: ${{ inputs.token }}
         buckets:
-        - name: ${{ inputs.bucket }}
+        - name: ${{ inputs.buckets }}
           alias: 
           region: ${{ inputs.region }}
         " > ~/.cos.yaml
