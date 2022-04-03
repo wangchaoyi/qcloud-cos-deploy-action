@@ -7,8 +7,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - id: foo
-        uses: wangchaoyi/qcloud-cos-deploy-action@v1
+        uses: wangchaoyi/qcloud-cos-deploy-action@main
         with:
-          who-to-greet: 'Mona the Octocat'
-      - run: echo random-number ${{ steps.foo.outputs.random-number }}
+          secret_id: secret_id_test
+          secret_key: secret_key_test
+          token: token_test
+          buckets: buckets_test
+          region: region_test
+      - run: cat ~/.cos.yaml
         shell: bash

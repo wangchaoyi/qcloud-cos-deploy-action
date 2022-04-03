@@ -1,23 +1,44 @@
-name: 'Hello World'
-description: 'Greet someone'
+name: 'QCloud Cos Deploy'
+description: 'deploy project to cos'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  secret_id:
+    description: "qcloud secret ID"
+    required: false
+    default: ""
+  secret_key:
+    description: "qcloud secret key"
+    required: false
+    default: ""
+  token:
+    description: "qcloud ots token"
+    required: false
+    default: ""
+  buckets:
+    description: "存储桶名称"
     required: true
-    default: 'World'
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-id }}
+  region:
+    description: "存储桶地域"
+    required: true
+
 runs:
   using: "composite"
   steps:
-    - run: echo Hello ${{ inputs.who-to-greet }}.
+    - run: |
+        wget https://github.com/tencentyun/coscli/releases/download/v0.10.2-beta/coscli-linux
+        mv coscli-linux coscli
+        chmod 755 coscli
+        ./coscli --version
       shell: bash
-    - id: random-number-generator
-      run: echo "::set-output name=random-id::$(echo $RANDOM)"
-      shell: bash
-    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
-      shell: bash          
-    - run: hello.sh
+    - run: |  
+        echo "
+        cos:
+        base:
+          secretid: ${{ inputs.secret_id }}
+          secretkey: ${{ inputs.secret_key }}
+          sessiontoken: ${{ inputs.token }}
+        buckets:
+        - name: ${{ inputs.bucket }}
+          alias: 
+          region: ${{ inputs.region }}
+        " > ~/.cos.yaml
       shell: bash
