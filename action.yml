@@ -32,13 +32,13 @@ runs:
     - run: |  
         echo "
         cos:
-        base:
-          secretid: ${{ inputs.secret_id }}
-          secretkey: ${{ inputs.secret_key }}
-          sessiontoken: ${{ inputs.token }}
-        buckets:
-        - name: ${{ inputs.buckets }}
-          alias: 
-          region: ${{ inputs.region }}
+          base:
+            secretid: ${{ inputs.secret_id }}
+            secretkey: ${{ inputs.secret_key }}
+            sessiontoken: ${{ inputs.token }}
+          buckets:
+          - name: ${{ inputs.buckets }}
+            alias: 
+            region: ${{ inputs.region }}
         " > ~/.cos.yaml
       shell: bash
