@@ -41,6 +41,5 @@ runs:
           - name: ${{ inputs.buckets }}
             alias: ${{ inputs.buckets }}
             region: ${{ inputs.region }}
-            endpoint: ${{ inputs.buckets }}.cos.${{ inputs.region }}.myqcloud.com
         " > ~/.cos.yaml
       shell: bash
