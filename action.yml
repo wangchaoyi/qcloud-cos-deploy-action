@@ -24,7 +24,7 @@ runs:
   using: "composite"
   steps:
     - run: |
-        wget https://github.com/tencentyun/coscli/releases/download/v0.11.0-beta/coscli-linux -O coscli
+        wget https://github.com/tencentyun/coscli/releases/download/v0.12.0-beta/coscli-linux -O coscli
         chmod 755 coscli
         sudo mv ./coscli /usr/local/bin/
         coscli --version
@@ -36,9 +36,11 @@ runs:
             secretid: ${{ inputs.secret_id }}
             secretkey: ${{ inputs.secret_key }}
             sessiontoken: ${{ inputs.token }}
+            protocol: https
           buckets:
           - name: ${{ inputs.buckets }}
-            alias: 
+            alias: ${{ inputs.buckets }}
             region: ${{ inputs.region }}
+            endpoint: ${{ inputs.buckets }}.cos.${{ inputs.region }}.myqcloud.com
         " > ~/.cos.yaml
       shell: bash
